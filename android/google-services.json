@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "357247078028",
+    "firebase_url": "https://hearth-5d9ff-default-rtdb.firebaseio.com",
+    "project_id": "hearth-5d9ff",
+    "storage_bucket": "hearth-5d9ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357247078028:android:515c051160349df7fd75a9",
+        "android_client_info": {
+          "package_name": "com.hearth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357247078028-66uldnf4ciedvpf5g7ttd7hbvn77soim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ5SWMJNQHyG7_I0RDTytq2Nj9z9ZHkfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357247078028-66uldnf4ciedvpf5g7ttd7hbvn77soim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
