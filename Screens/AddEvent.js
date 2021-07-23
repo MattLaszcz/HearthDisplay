@@ -195,9 +195,10 @@ export default class AddEvent extends React.Component {
                     
 
                     ) : null}
+                    <View style={styles.breakline} />
                     <View style={{flexDirection: 'row', width: '90%'}}>
                         <Icon style={{marginRight: 25}} name="location" size={18} color="#900" />
-                        <Text>Location</Text>
+                        <Text style={{color:'lightgrey'}}>Location</Text>
                     </View>
             {/* </View> */}
                 <View style={styles.breakline} />
@@ -270,10 +271,12 @@ export default class AddEvent extends React.Component {
                         <Text style={{ }}>Reminder</Text>
                         <TextInput
                             style={{ borderWidth: 1,
-                            alignContent:'center' }}
+                            alignContent:'center', placeholderTextAlign: 'center',placeholderTextColor: 'blue' }}
                             style={styles.input}
                             onChangeText={text => this.setState({ reminder: text })}
-                            //placeholder="Name"
+                            placeholder="Reminder"
+                            //placeholderTextColor='blue'
+                            textAlign={'right'}
                             // onChangeText={onChangeText}
                             value={this.state.reminder}
                         />
@@ -286,7 +289,8 @@ export default class AddEvent extends React.Component {
                     <TextInput
                         style={styles.input}
                         onChangeText={text => this.setState({ notes: text })}
-                        //placeholder="Name"
+                        placeholder="Notes"
+                        textAlign={'right'}
                         // onChangeText={onChangeText}
                         value={this.state.notes}
                     />
@@ -346,8 +350,9 @@ export default class AddEvent extends React.Component {
                     <TouchableOpacity>
                         <Button
                         title='ADD'
+                        //color="#ff5c5c"
                         onPress={this.addTaskHandler()}>
-
+                        
                         </Button>
                     </TouchableOpacity>
                 {/* <TouchableOpacity style={styles.startroutine} >
@@ -543,7 +548,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderWidth: 0,
         fontSize: 50,
-        textAlignVertical:'bottom', paddingTop: 0, paddingBottom:0
+        textAlignVertical:'bottom', 
+        paddingTop: 0, 
+        paddingBottom:0,
+        textAlign: 'right'
     },
     modalView: {
         //borderWidth: 2,
@@ -591,7 +599,7 @@ const styles = StyleSheet.create({
         // borderWidth: 0,
         // borderWidth: 1,
         
-        borderBottomWidth: 1
+        //borderBottomWidth: 1
     },
     picker: {
         height: 15,

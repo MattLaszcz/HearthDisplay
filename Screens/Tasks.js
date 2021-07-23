@@ -456,10 +456,18 @@ export default class Tasks extends React.Component {
 
                         <View style={styles.modalView}>
                             <AddEvent />
-                            <Pressable
-                                title="Close"
+                        <TouchableOpacity style={styles.startroutine} >
+                            <Button
                                 color='white'
-
+                                title="SAVE"
+                                onPress={() => this.setModalVisible(!modalVisible)}
+                            />
+                        </TouchableOpacity>
+                            {/* <TouchableOpacity styles={{backgrounfColor: "#1AA39B"}}>
+                            <Button
+                                title="Close"
+                                color= "#1AA39B"
+                                //backgroundColor="#1AA39B"
                                 style={[
                                     styles.button,
                                     styles.buttonClose,
@@ -467,6 +475,7 @@ export default class Tasks extends React.Component {
 
                                 ]}
                                 onPress={() => this.setModalVisible(!modalVisible)} />
+                                </TouchableOpacity> */}
                             {/* <Button title = "close">
                                         <Text>Close</Text>
                                     </Button> */}
@@ -531,6 +540,7 @@ export default class Tasks extends React.Component {
                             </Pressable>
                         </View>
                     </View>
+                    <ScrollView>
                     <View>
                         <View style={styles.taskcategory}>
                             <View>
@@ -539,6 +549,7 @@ export default class Tasks extends React.Component {
                             <View style={styles.plusicon}><Icon name="plus" size={18} color="black" /></View>
                         </View>
                     </View>
+                    
                     <View style={styles.tasks}>
                         {tasks1.map((task) => {
                             return (
@@ -557,13 +568,14 @@ export default class Tasks extends React.Component {
                             );
                         })}
                     </View>
+                    </ScrollView>
                     {/* <View>
                         <TaskItem />
                         <TaskItem />
                         <TaskItem />
                         <TaskItem />
                     </View> */}
-
+                    <ScrollView>
                     <View>
                         <View style={styles.taskcategory}>
                             <View>
@@ -590,13 +602,14 @@ export default class Tasks extends React.Component {
                             );
                         })}
                     </View>
+                    </ScrollView>
                     {/* <View>
                     <TaskItem />
                     <TaskItem />
                     <TaskItem />
                     <TaskItem />
                 </View> */}
-
+                    <ScrollView>
                     <View>
                         <View style={styles.taskcategory}>
                             <View>
@@ -624,8 +637,7 @@ export default class Tasks extends React.Component {
                             );
                         })}
                     </View>
-
-
+                    </ScrollView>
 
                 </ScrollView>
 
@@ -837,7 +849,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         elevation: 2,
-        color: 'white',
+        fontColor: 'white',
         fontSize: 10
     },
     buttonOpen: {
@@ -1014,5 +1026,14 @@ const styles = StyleSheet.create({
     },
     plusicon: {
         marginRight: 0
+    },
+    startroutine: {
+        color: "#1AA39B",
+        backgroundColor: '#1AA39B',
+        color: 'white',
+        width: 100,
+        borderRadius: 25,
+        //marginRight: 30,
+        // borderWidth: 2,
     }
 });
