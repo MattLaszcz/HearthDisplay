@@ -1,3 +1,4 @@
+
 rootProject.name = 'HearthNative'
 
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
@@ -7,5 +8,3 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 applyNativeModulesSettingsGradle(settings)
 
 include ':app'
-
-
