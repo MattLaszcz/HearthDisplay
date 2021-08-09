@@ -5,10 +5,10 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
-import thunkMiddleware from 'redux-thunk'
-import reducer from './store/reducers'
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+import reducer from './store/reducers';
 
 // Components
 import Home from './Screens/Home';
@@ -20,15 +20,15 @@ import Profiles from './Screens/Profiles';
 import RoutineDashboard from './Screens/RoutineDashboard';
 import Landing from './Screens/Landing';
 import EntryScreen from './Screens/EntryScreen';
-import AddEvent from './Screens/AddEvent';
-import DailyCalendar from './Screens/DailyCalendar';
+//import AddEvent from './Screens/AddEvent';
+//import DailyCalendar from './Screens/DailyCalendar';
 import Tasks from './Screens/Tasks';
-import TimerTest from './Screens/TimerTest';
+//import TimerTest from './Screens/TimerTest';
 import Login from './Screens/Login';
 import userReducer from './store/reducers/index';
 import tasksReducer from './store/reducers/index';
 import dispatchTest from './store/reducers/index';
-import Counter from './Screens/Counter';
+//import Counter from './Screens/Counter';
 
 import store from './store/reducers/index_1';
 /**
@@ -53,7 +53,7 @@ import store from './store/reducers/index_1';
 const Navigator = createStackNavigator({
     
     Home: { screen: Home },
-    Counter: { screen: Counter },
+    //Counter: { screen: Counter },
     RoutineDashboard: { screen: RoutineDashboard },
 
     Landing: { screen: Landing },
@@ -67,9 +67,9 @@ const Navigator = createStackNavigator({
     EntryScreen: { screen: EntryScreen },
     //AddEvent: {screen: AddEvent},
     RoutineDashboard: { screen: RoutineDashboard },
-    DailyCalendar: { screen: DailyCalendar },
+    //DailyCalendar: { screen: DailyCalendar },
     Tasks: { screen: Tasks },
-    TimerTest: { screen: TimerTest },
+    //TimerTest: { screen: TimerTest },
 
 });
 

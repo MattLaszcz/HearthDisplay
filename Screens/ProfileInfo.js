@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Button, Text, StatusBar, TextInput, Image, TouchableOpacity, navigate} from 'react-native';
-import ImageSelector from '../components/ImageSelector';
+//import ImageSelector from '../components/ImageSelector';
 import ToggleSwitch from '../components/ToggleSwitch';
 import axios from 'axios';
 //import ImageSelector from '../components/ImageSelector';

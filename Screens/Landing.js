@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Button, Text, StatusBar, TextInput, TouchableOpacity, ImageBackground, Image, Pressable } from 'react-native';
+import { StyleSheet, View, Button, Text, TextInput, TouchableOpacity, Image, Pressable } from 'react-native';
 import SpinningLogo from '../components/SpinningLogo';
 /**
  * Home screen

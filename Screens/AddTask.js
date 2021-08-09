@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity, Touchable, Image} from 'react-native';
+import { StyleSheet, View, Text, Button, TouchableOpacity, Image} from 'react-native';
 import ToggleSwitch from '../components/ToggleSwitch';
-import axios from 'axios';
+//import axios from 'axios';
 
 /**
  * Profile screen
