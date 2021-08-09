@@ -1,4 +1,6 @@
 import React from 'react';
+import { ThemeProvider } from 'react-native-elements';
+import { ThemeProvider } from 'styled-components';
 import { registerRootComponent } from 'expo';
 import { View, Text, Button } from 'react-native';
 import { createAppContainer } from 'react-navigation';

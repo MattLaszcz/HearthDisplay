@@ -3,14 +3,14 @@
 
 
 import firebase from 'firebase';
-import {
-    API_KEY,
-    AUTH_DOMAIN,
-    DATABASE_URL,
-    PROJECT_ID,
-    MESSAGE_SENDER_ID,
-    APP_ID
-} from '@env'
+// import {
+//     API_KEY,
+//     AUTH_DOMAIN,
+//     DATABASE_URL,
+//     PROJECT_ID,
+//     MESSAGE_SENDER_ID,
+//     APP_ID
+// } from '@env'
 //'react-native-dotenv'
 
 // ... after other imports
