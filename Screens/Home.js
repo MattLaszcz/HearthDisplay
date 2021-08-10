@@ -333,21 +333,24 @@ class Home extends React.Component {
                         secureTextEntry={false}
                     />
                 </View>
-                <TouchableOpacity style={styles.signupbutton}>
-                    <Button
-                        color='white'
-                        title="Sign Up"
-                        onPress={() => this.handleSignUp()}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.signupbutton}>
-                    <Button
-                        color='white'
-                        title="Log in"
-                        onPress={() => this.handleLogin()}
 
-                    />
-                </TouchableOpacity>
+                <View style={styles.signupbuttoncontainer}>
+                    <TouchableOpacity style={styles.signupbutton}>
+                        <Button
+                            color='white'
+                            title="Sign Up"
+                            onPress={() => this.handleSignUp()}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.signupbutton}>
+                        <Button
+                            color='white'
+                            title="Log in"
+                            onPress={() => this.handleLogin()}
+
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
         );
 
@@ -386,7 +389,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: 'white',
-        borderWidth: 0
+        borderWidth: 0,
+        borderWidth: 1
     },
     introText: {
         flex: 0,
@@ -394,32 +398,45 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: 200,
-        marginBottom: 20
+        marginBottom: 20,
+        borderWidth: 1
     },
     signupbutton: {
         backgroundColor: '#1AA39B',
         color: 'white',
         width: 300,
         borderRadius: 25,
-        marginTop: 20
+        marginTop: 20,
+        borderWidth: 1
     },
     textlabel: {
         // alignItems: 'flex-start',
         paddingLeft: 20,
-        opacity: 0.5
+        opacity: 0.5,
+        borderWidth: 1
 
 
     },
     welcometext: {
         fontSize: 32,
-        marginBottom: 15
+        marginBottom: 15,
+        borderWidth: 1,
+        height: '4%',
+        width: '30%',
+        
     },
     familytext: {
         fontSize: 32,
         marginBottom: 15
     },
     logogreen: {
-        marginBottom: 200
+        //marginBottom: 200,
+        marginBottom: '10%',
+        borderWidth: 1
+    },
+    signupbuttoncontainer: {
+        borderWidth: 1,
+        marginBottom: '2%'
     }
 });
 
