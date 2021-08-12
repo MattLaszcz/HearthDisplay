@@ -30,7 +30,7 @@ import userReducer from './store/reducers/index';
 import tasksReducer from './store/reducers/index';
 import dispatchTest from './store/reducers/index';
 //import Counter from './Screens/Counter';
-
+import AddTask from './Screens/AddTask';
 import store from './store/reducers/index_1';
 /**
  * createStackNavigator
@@ -54,6 +54,7 @@ import store from './store/reducers/index_1';
 const Navigator = createStackNavigator({
     
     Home: { screen: Home },
+    AddTask: { screen: AddTask },
     //Counter: { screen: Counter },
     RoutineDashboard: { screen: RoutineDashboard },
 

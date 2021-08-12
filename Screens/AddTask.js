@@ -1,36 +1,65 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, TouchableOpacity, Image} from 'react-native';
+import { useState, useEffect } from "react";
+import { StyleSheet, View, Text, Button, TouchableOpacity, Image, TextInput} from 'react-native';
 import ToggleSwitch from '../components/ToggleSwitch';
-//import axios from 'axios';
 
-/**
- * Profile screen
- */
-export default class AddEvent extends React.Component {
+import store from '../store/reducers/index_1';
+import {db, FireStore} from '../config/Firebase';
 
-    constructor() {
-        super();
-        this.d = new Date().toString();
+// const updateTaskInfo = (event) => {
+//     const [name, setName] = useState('');
+//     setName(event.target.value);
+    
+//     console.log(event.target.value);
+// }
+
+function AddTask ()  {
+    
+    const [name, setName] = useState('');
+    const [assigned, setAssigned] = useState('');
+    const [tag, setTag] = useState('');
+    const [id, setId] = useState('');
+
+
+    // const storeSubscribe = store.subscribe(() => {
+    //     // When state will be updated(in our case, when items will be fetched), 
+    //     // we will update local component state and force component to rerender 
+    //     // with new data.
+    //     console.log(store.getState().id);
+    //     setId(store.getState().id)
+    // });
+
+    //const updateTaskInfo = event => setName(event.target.value);
+    useEffect(() => {
+        const storeId = store.getState().id;
+        console.log(storeId);
+        //storeSubscribe();
+         store.subscribe(() => {
+            // When state will be updated(in our case, when items will be fetched), 
+            // we will update local component state and force component to rerender 
+            // with new data.
+            
+            console.log(store.getState().id);
+            setId(store.getState().id)
+        },);
+        console.log('name state '+name),name;
+        console.log('id '+id,id);
+    },[]);
+
+    
+
+    const updateTaskInfo = event => setName(event.target.value);
+
+
+    const addTaskHandler = () => {
+        //console.log('this state id' + this.state.id);
+        db.collection('users').doc(this.state.id).collection('tasks').doc().set({
+            name: this.state.name,
+            assigned: this.state.assigned,
+            tag: this.state.tag
+        })
     }
-
-
-
-    // static navigationOptions = ({ navigation }) => {
-    //     return {
-    //         title: navigation.getParam('name'),
-    //     };
-    // };
-
-    // static navigationOptions = ({ navigation }) => {
-    //     return {
-    //          title: navigation.getParam('name'),
-    //     };
-    // };
-
-    render() {
-
-        const { navigate, state } = this.props.navigation;
-
+    
         return (
             <View style={styles.container}>
 
@@ -100,21 +129,40 @@ export default class AddEvent extends React.Component {
                     <Text>None</Text>
                 </View>
                 <View style={styles.breakline} />
+                <TextInput
+                            //style={{ borderWidth: 1,
+                            //alignContent:'center', placeholderTextAlign: 'center',placeholderTextColor: 'blue' }}
+                            //style={styles.input}
+                            onChangeText ={ value => setName(value) }
+                            placeholder="Name"
+                            //placeholderTextColor='blue'
+                            //textAlign={'right'}
+                            // onChangeText={onChangeText}
+                            value={name}
+                        />
 
 
                 <TouchableOpacity style={styles.startroutine} >
                         <Button
                                 color='white'
                                 title="Start Free Time"
-                                onPress={() => navigate('RoutineDashboard')}
+                                onPress={
+                                    addTaskHandler
+                                    //() => navigate('RoutineDashboard')
+                                }
                             />
                     </TouchableOpacity>
             </View>
         );
-
-    }
-
 }
+
+    
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -166,3 +214,5 @@ const styles = StyleSheet.create({
         height: 50
     }
 });
+
+export default AddTask;

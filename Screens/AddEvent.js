@@ -15,7 +15,7 @@ export default class AddEvent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.d = new Date().toString();
+        //this.d = new Date().toString();
 
         this.state = {
             buttonShouldShow: false,
@@ -32,6 +32,8 @@ export default class AddEvent extends React.Component {
             id: store.getState().id
             
         }
+
+        console.log(this.state.name);
 
         store.subscribe(() => {
             // When state will be updated(in our case, when items will be fetched), 
@@ -351,7 +353,7 @@ export default class AddEvent extends React.Component {
                         <Button
                         title='ADD'
                         //color="#ff5c5c"
-                        onPress={this.addTaskHandler()}>
+                        onPress={() => this.addTaskHandler()}>
                         
                         </Button>
                     </TouchableOpacity>
