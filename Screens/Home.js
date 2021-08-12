@@ -166,7 +166,7 @@ class Home extends React.Component {
                     test: 'test'
                 })
             })
-            .then(() => this.props.navigation.navigate('AddTask'))
+            .then(() => this.props.navigation.navigate('AddProfiles'))
 
             .catch(error => console.log(error))
 
