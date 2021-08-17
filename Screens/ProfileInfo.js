@@ -1,9 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Button, Text, StatusBar, TextInput, Image, TouchableOpacity, navigate} from 'react-native';
-//import ImageSelector from '../components/ImageSelector';
+import ImageSelector from '../components/ImageSelector';
 import ToggleSwitch from '../components/ToggleSwitch';
 import axios from 'axios';
 //import ImageSelector from '../components/ImageSelector';
+// import ImagePicker from 'react-native-image-crop-picker';
+// import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+
+
 /**
  * Home screen
  */
@@ -24,6 +29,19 @@ export default class ProfileInfo extends React.Component {
             title: navigation.getParam('name'),
         };
     };
+
+
+    choosePhotoFromLibrary = () => {
+        ImagePicker.openPicker({
+          width: 1200,
+          height: 780,
+          cropping: true,
+        }).then((image) => {
+          console.log(image);
+          const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+          setImage(imageUri);
+        });
+      };
 
     postDataHandler = () => {
         
@@ -75,13 +93,11 @@ export default class ProfileInfo extends React.Component {
         return (
             
             <View style={styles.container}>
-                {/* <Text >Welcome to Hearth!</Text>
-                <Text style={styles.introText}>Lets get your account set up so you can start making more intentional time with your family</Text> */}
-                 {/* <Image
+                 <Image
                     // style={styles.profilephotos}
                     source={require('../assets/mom.png')}
-                /> */}
-                {/* <ImageSelector style={styles.image}/> */}
+                />
+                <ImageSelector style={styles.image}/>
                 <View style={styles.toggle}>
                     <Text style={styles.momtext}>MOM</Text>
                     <ToggleSwitch />

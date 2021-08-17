@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 //import * as Font from 'expo-font';
-import { StyleSheet, View, Text, Button, Image, TouchableOpacity, ScrollView, useState, Alert, Modal, ImageBackground, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Button, Image, TouchableOpacity, ScrollView, Alert, Modal, ImageBackground, Pressable } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import TaskCard from '../components/TaskCard';
 //import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -13,401 +13,188 @@ import axios from 'axios';
 import { ToolbarAndroid } from 'react-native';
 import TaskItem from '../components/TaskItem';
 import Icon from 'react-native-vector-icons/Feather';
-import AddEvent from './AddEvent';
+//import AddEvent from './AddEvent';
+import AddTask from './AddTask';
 import TimerTest from './TimerTest';
 //import Search from '../components/SearchBar';
 //import store from '../../HearthNative/App';
 import { connect, useDispatch } from 'react-redux'
-//import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Firebase, { db } from '../config/Firebase';
 import store from '../store/reducers/index_1';
-import AddTask from './AddTask';
 
 
-/**
- * Profile screen
- */
-export default class Tasks extends React.Component {
+function Tasks_1 () {
 
-    constructor(props) {
-        super(props);
+    const [name, setName] = useState('');
+    const [assigned, setAssigned] = useState('');
+    const [tag, setTag] = useState('');
+    const [id, setId] = useState('');
+    const [tasks, setTasks] = useState([]);
+    const [tasks_, setTasks_] = useState([]);
+    const [completeTasks, setCompleteTasks] = useState(0);
+    const [isVisible, setisVisible] = useState(true);
+    const [selectedCountriesValues, setselectedCountriesValues] = useState('uk');
+    const [buttonShouldShow, setbuttonShouldShow] = useState(false);
+    const [eventShouldShow, seteventShouldShow] = useState(true);
+    const [countries, setcountries] = useState('France');
+    const [modalVisible, setmodalVisible] = useState(false);
+    const [notes, setnotes] = useState('');
+    const [reminder, setreminder] = useState('');
+    const [setShouldShow, setsetShouldShow] = useState(false);
+    const [homeLogoShouldShow, sethomeLogoShouldShow] = useState(true);
+    const [allShouldShow, setallShouldShow] = useState(true);
+    // const [selectedCountries, setselectedCountries] = useState([{ label: 'UK', value: 'uk', icon: () => <Icon name="plus" size={18} color="#900" /> }]);
 
-        this.d = new Date().toString();
-        
-        store.subscribe(() => {
-            // When state will be updated(in our case, when items will be fetched), 
-            // we will update local component state and force component to rerender 
-            // with new data.
-            let stateId = store.getState().id;
-            this.setState({
-                id: stateId
-            });
-        });
+   
 
-        this.state = {
-            tasks: 6,
-            completeTasks: 0,
-            isVisible: true,
-            setShouldShow: false,
-            buttonShouldShow: false,
-            homeLogoShouldShow: true,
-            allShouldShow: true,
-            tasks_: [],
-            modalVisible: false,
-            selectedCountriesValues: ['uk'],
-            selectedCountries: [{ label: 'UK', value: 'uk', icon: () => <Icon name="plus" size={18} color="#900" /> }],
-            countries: 'France',
-            name: '',
-            assigned: '',
-            id: store.getState().id
-        }
 
-        let stateId = store.getState().id;
-        this.setState({
-            id: stateId
-        });
-        // When state will be updated(in our case, when items will be fetched), 
-        // we will update local component state and force component to rerender 
-        // with new data.
+//--------------------GET INFO------------------------------
+// useEffect(() => {
+//     setId(userId);
+//     console.log('TASKS_1 USER ID' + userId);
+// });
 
-        // this.setState({
-        //   id: store.getState().id
-        // });
-
-        
-        
-    }
-
+//    const getInfoHandler = () => {
+//     var docRef = db.collection('users').doc(id).collection('tasks');
     
+//       var docRefTest = db.collection('users').doc(id).collection('tasks').get()
+//       .then(querySnapshot => {
+//         const documents = querySnapshot.docs.map(doc => doc.data());
+//         console.log('documents'+documents);
+//         setTasks(documents);
+//     });
 
-    setModalVisible = (visible) => {
+//     docRef.get().then((doc) => {
+//         if (doc.exists) {
+//             const tasks = doc.data();
+//             let keys = Object.keys(tasks);
+//             let values = Object.values(tasks);
+//             const updatedPosts = keys.map(key => {
+//                 return {
+//                     key, ...tasks[key],
 
-        // store.dispatch({ type: 'todos/todoAdded', payload: 'Learn about stores' })
-        // store.dispatch(tasksReducer('Dispatch Worked'));
+//                 }
+//             });
+//             console.log('UPDATED POSTS ' + updatedPosts);
+//             console.log('THIS STATE TASKS' + tasks);
+//             console.log('keys ' + keys);
+//             console.log('values ' + values);
 
-        this.setState({ modalVisible: visible });
-        //this.postDataHandler();
-        const data = {
-            reminder: this.state.reminder,
-            notes: this.state.notes,
-            name: this.state.name,
-            assigned: this.state.assigned
-        };
-        const _data = JSON.stringify(data);
-        //('_data'+_data);
-        //console.log(data);
-        axios.post('https://hearth-5d9ff-default-rtdb.firebaseio.com/tasks.json', _data)
-            .then(response => {
-                //console.log( response );
-                const key = Object.keys(response.data);
-                //console.log('KEY' + key);
+//             console.log("Document data:", doc.data());
+//             //this.setState({ tasks_: keys });
+//         } else {
 
-                this.setState({ submitted: true });
-            });
+//             // doc.data() will be undefined in this case
+//             console.log("No such document!");
+//         }
+//     }).catch((error) => {
+//         console.log("Error getting document:", error);
+//     });
+// }
 
-        fetch('https://hearth-5d9ff-default-rtdb.firebaseio.com/users.json', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: _data
-        })
+const userId = useSelector((state) => state.id);
+console.log('USERID '+userId);
+
+
+//--------------------GET INFO------------------------------
+// useEffect(() => {
+
+//     //const setUserId = setId(userId);
+
+//     if (id !== '') {
+//         db.collection('users').doc(id).collection('tasks').onSnapshot((snapshot)=>{
+//             const tempTasks = [];
+//             snapshot.forEach(
+//                doc => {
+//                    tempTasks.push(doc.data());
+//                }
+//             )
+//             setTasks(tempTasks);
+//         });
+//     }
+// });
+
+useEffect(() => {
+
+    // this will make sure you only set id when userId
+    // is a valid value, and it won't reset it every
+    // serenader
+  if(userId!=='' && id !== userId)
+     setId(userId);
+
+  if (id !== '') {
+      db.collection('users').doc(id).collection('tasks').onSnapshot((snapshot)=>{
+          const tempTasks = [];
+          snapshot.forEach(
+             doc => {
+                 tempTasks.push(doc.data());
+             }
+          )
+          setTasks(tempTasks);
+      });
+  }
+
+}),[id, userId];
+
+useEffect(()=> console.log('here'),[userId]);
+
+
+
+const thissetModalVisible = (visible) => {
+        setmodalVisible(visible);
     }
 
-    shouldShow() {
-        this.setState({
-            setShouldShow: true
-        });
+// const shouldShow = () => {
+//         setsetShouldShow(true);
+//     }
 
-    }
+    // function buttonShouldShow() {
+    //     this.setState({
+    //         buttonShouldShow: true,
+    //         homeLogoShouldShow: false
+    //     });
+    // }
 
-    buttonShouldShow() {
-        this.setState({
-            buttonShouldShow: true,
-            homeLogoShouldShow: false
-        });
-    }
+    // const thisbuttonShouldShow = () => {
+    //     setbuttonShouldShow(true);
+    //     seteventShouldShow(false);
+    // }
 
-    completeTasksCheck() {
-        if (this.state.completeTasks === this.state.tasks) {
-            //this.shouldShow;
-            //console.log('You Finished 1')
-            this.buttonShouldShow();
-
-
-            // return (
-
-            // console.log('You finished 2')
-            // //alert('You finihsed');
-            // )
-        }
-    }
 
     // componentDidUpdate () {
     //    // this.getInfoHandler();
     //    this.state.tasks
     // }
 
-    useEffect() {
-        this.getInfoHandler();
-    }
-       
-    
 
-    componentDidMount() {
+    // const showAllTasksHandler = () => {
+    //     // this.setState({
 
-        store.subscribe(() => {
-            // When state will be updated(in our case, when items will be fetched), 
-            // we will update local component state and force component to rerender 
-            // with new data.
-            let stateId = store.getState().id;
-            this.setState({
-                id: stateId
-            });
-        });
+    //     // })
+    // }
 
-       
-        this.getInfoHandler();
-        console.log('TASKS RECEIVED ID'+ this.state.id);
-        //    AXIOS------------------------------------------------------------     
-        //console.log('COMPONENT DID MOUNT TEST');
-        // axios.get('https://hearth-5d9ff-default-rtdb.firebaseio.com/tasks.json')
-        //     .then(response => {
-        //         //let posts = Object.values(response.data);
-        //         let keys = Object.keys(response.data);
-        //         //console.log('object KEYS'+keys);
+    // const showCategoriesHandler = () => {
+    //         // this.setState({
 
-        //         const updatedPosts = keys.map(key => {
-        //             return {
-        //                 key, ...response.data[key],
-
-        //             }
-        //         });
-        //         const updatedPosts_1 = JSON.stringify(updatedPosts)
-        //         //console.log('updatedposts'+updatedPosts_1);
-
-        //         //------------------SET STATE TASKS---------------
-        //         //this.setState( { tasks_: updatedPosts } );
-        //         //console.log('This state tasks'+this.state.tasks_);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         // this.setState({error: true});
-        //     });
-
-        //console.log('completeTasks1:' + this.state.completeTasks);
-        // axios.post('https://hearth-5d9ff-default-rtdb.firebaseio.com/users.json')
-        //     .then(response => {
-        //         // console.log( response );
-        //         //const key = Object.keys(response.data);
-        //         // console.log('KEY' + key);
-        //         let keys = Object.keys(response.data);
-        //         const posts = Object.values(response.data);
-        //         const test = response.data[id];  //IMPORTANT----------------------------
-        //         //console.log(keys);
-        //         //console.log(posts);
-        //         //console.log('This was clicked');
-        //         this.setState({ submitted: true });
-        //     });
-
-        //    AXIOS------------------------------------------------------------  
-
-        //     fetch('https://hearth-5d9ff-default-rtdb.firebaseio.com/users.json', {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //         //body: _data
-
-        // })
+    //         // })
+    //     }
 
 
-
-
-        //     axios.get('https://hearth-5d9ff-default-rtdb.firebaseio.com/tasks.json', {
-        //         method: 'GET',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         //body: _data
-        // }).then( response => {
-        //             //let posts = Object.values(response.data);
-        //             let keys = Object.keys(response.data);
-        //             const posts = Object.values(response.data);
-        //             const test = response.data[id];  //IMPORTANT----------------------------
-        //             console.log(keys);
-        //             console.log(posts);
-        //             console.log('This was clicked');
-        //const data_1 = {
-        // answer,
-        //   isAnswered: true
+        //--------NAVIGATION--------------------------------
+        // static navigationOptions = ({ navigation }) => {
+        //     return {
+        //         title: navigation.getParam('name'),
+        //     };
         // };
-        //const data_2 = JSON.stringify(data_1);
-        //alert(data_2);
-        //const data = this.state.posts;
-
-
-        //axios.patch('posts/'+id+'.json', data_2);
-
-
-        // });
-
-        //-----------INSTANCE COUNTER--------------------------------------------------------------
-        //     var counter = 0;
-        // React.Children.forEach(this.props.children, function(child) {
-        //   if (child.id.task1) counter++;
-        // });
-        // //  if (this.state.completeTasks === 2) {
-        // //     console.log('Finished')
-        // //    return (
-        // //         console.log('Finished')
-        // //    )
-        // // }
-        // // this.setState({
-        // //     tasks: counter
-        // // });    
-        // //console.log('counter'+ counter); LOGS THE INSTANCES COUNTED
-        // return counter;
-
-    }
-
-
-    updateTaskCountHandler(className) {
-        // if (this.state.completeTasks === this.state.tasks) {
-        //     //this.shouldShow;
-        //     console.log('You Finished 1')
-        //     this.buttonShouldShow(); 
-
-
-        //     return (
-
-        //     console.log('You finished 2')
-        //     //alert('You finihsed');
-        //     )
-        // }
-
-
-        // const currentTaskCount = this.state.completeTasks;
-        // console.log('currentTaskCount:'+ currentTaskCount);
-        // const updatedTaskCount = currentTaskCount + 1;
-        // console.log('updatedTaskCount:'+ updatedTaskCount);
-        //console.log('Initial complete tasks'+this.state.completeTasks);
-
-        //let taskCount = this.state.completeTasks;
-        //taskCount = taskCount + 1;
-
-        //console.log('taskCount'+' '+taskCount);
-        //this.setState({completeTasks: taskCount});
-
-        //   this.setState((state) => {
-        //       return {completeTasks:  this.state.completeTasks + 1};
-        //       console.log('completeTasks:' + this.state.completeTasks);
-
-        //   });
-
-        this.setState({
-            completeTasks: (this.state.completeTasks + 1)
-        }, () => {
-            this.completeTasksCheck();
-            console.log('completeTasks:' + this.state.completeTasks);
-        })
-
-
-        // {this.state.setShouldShow ? (
-
-
-        //         ) : null}
-
-        // this.setState({
-        //     completeTasks: this.taskCount;
-
-        // })
-
-        //console.log('completeTasks:' + this.state.completeTasks);
-        //console.log('className:'+ className);
-
-
-
-    }
-
-    getInfoHandler() {
-        var docRef = db.collection('users').doc(this.state.id).collection('tasks');
-        
-          var docRefTest = db.collection('users').doc(this.state.id).collection('tasks').get()
-          .then(querySnapshot => {
-            const documents = querySnapshot.docs.map(doc => doc.data());
-            console.log('documents'+documents);
-            this.setState({ tasks_: documents });
-        });
-
-        
-
-           
-       // var docRefTest = db.collection('users').doc(this.state.id).collection('tasks').docs.map(doc => doc.data());
-        //console.log('docRefTest'+docRefTest);
-        //return snapshot.docs.map(doc => doc.data());
-        //.doc('Z6vzTZUu1p0VDIkQkbJW');
-
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                const tasks = doc.data();
-                let keys = Object.keys(tasks);
-                let values = Object.values(tasks);
-                const updatedPosts = keys.map(key => {
-                    return {
-                        key, ...tasks[key],
-
-                    }
-                });
-                console.log('UPDATED POSTS ' + updatedPosts);
-                console.log('THIS STATE TASKS' + tasks);
-                console.log('keys ' + keys);
-                console.log('values ' + values);
-
-                console.log("Document data:", doc.data());
-                //this.setState({ tasks_: keys });
-
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-    }
 
     
-
-    showAllTasksHandler() {
-        // this.setState({
-
-        // })
-    }
-
-    showCategoriesHandler() {
-        // this.setState({
-
-        // })
-    }
-
-    handleStateChange = updatedState => {
-        console.log("updatedState: ", updatedState);
-        
-      };
-
-    static navigationOptions = ({ navigation }) => {
-        return {
-            title: navigation.getParam('name'),
-        };
-    };
-
-    render() {
       
-        const { modalVisible } = this.state;
-        const percentage = 50;
-        const _percentage = (this.state.completeTasks / this.state.tasks) * 100;
+        //const { modalVisible } = modalVisible;
+        // const percentage = 50;
+        // const _percentage = (completeTasks / tasks) * 100;
 
-        const { navigate, state } = this.props.navigation;
+        //const { navigate, state } = this.props.navigation;
         //const date = moment().format('MMMM Do YYYY, h:mm:ss a');
         //     const getCurrentDate=()=>{
 
@@ -421,15 +208,13 @@ export default class Tasks extends React.Component {
         //   }
 
 
-
-        const tasks1 = this.state.tasks_;
+        const tasks1 = tasks;
 
         return (
 
 
 
             <View style={styles.container}>
-                
 
                 {/* <TouchableOpacity style={styles.startroutine} >
                         <Button
@@ -465,7 +250,7 @@ export default class Tasks extends React.Component {
                 <View style={styles.timeanddate}>
                     {/* <Text style={styles.date}>Monday, January 3, 2021</Text> 
                    <Text style={styles.time}>9:41 AM</Text> */}
-                    <Text>{this.d}</Text>
+                    {/* <Text>{this.d}</Text> */}
 
                 </View>
 
@@ -484,23 +269,26 @@ export default class Tasks extends React.Component {
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
-                    onRequestClose={() => {
-                        //Alert.alert("Modal has been closed.");
-                        this.setModalVisible(!modalVisible);
-                    }}>
+                    // onRequestClose={
+                    //     //Alert.alert("Modal has been closed.");
+                    //     //setModalVisible(!modalVisible)
+                    // }
+                    >
                     <View
                         style={styles.centeredView}
                     >
 
                         <View style={styles.modalView}>
-                            <AddTask setvalue={this.setState}/> 
-                        <TouchableOpacity style={styles.startroutine} >
+                             <AddTask 
+                                changeModal={(modal) => setmodalVisible(modal)}
+                             />
+                        {/* <TouchableOpacity style={styles.startroutine} >
                             <Button
                                 color='white'
                                 title="SAVE"
-                                onPress={() => this.setModalVisible(!modalVisible)}
+                                onPress={()=>setmodalVisible(!modalVisible)}
                             />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                             {/* <TouchableOpacity styles={{backgrounfColor: "#1AA39B"}}>
                             <Button
                                 title="Close"
@@ -560,7 +348,7 @@ export default class Tasks extends React.Component {
                                 <Image style={styles.profileimage} source={require('../assets/mom.png')}></Image>
                                 <Image style={styles.profileimage} source={require('../assets/mom.png')}></Image>
                             </View>
-                            {this.state.setShouldShow ? (
+                            {setShouldShow ? (
                                 <View><Text
                                 //onPress={this.showCategoriesHandler()}
                                 >View Category</Text></View>
@@ -574,7 +362,7 @@ export default class Tasks extends React.Component {
                         </View>
                         <View >
                             <Pressable style={styles.filter}>
-                                <Text onPress={() => this.setModalVisible(true)}>Add Category</Text><Icon name="plus" size={18} color="black" />
+                                <Text onPress={() => setmodalVisible(true)}>Add Category</Text><Icon name="plus" size={18} color="black" />
                             </Pressable>
                         </View>
                     </View>
@@ -640,7 +428,6 @@ export default class Tasks extends React.Component {
                             );
                         })}
                     </View>
-                   
                     </ScrollView>
                     {/* <View>
                     <TaskItem />
@@ -676,36 +463,24 @@ export default class Tasks extends React.Component {
                             );
                         })}
                     </View>
-                    
                     </ScrollView>
-                    
-                </ScrollView>
-                <View 
-                    style={{width: 50,borderWidth: 1, borderColor: 'red', marginBottom: '5%', marginRight: '5%'}}
-                    >
-                <TouchableOpacity 
-                    onPress={() => this.setModalVisible(true)}
-                    style={{width: 50,height: 50, borderWidth: 2, borderColor: 'blue', zIndex:5, marginBottom: 100, position: 'absolute' }}>
-                        <Image 
-                            
-                            style={styles.addprofilebutton}
-                            source={require('../assets/addprofilebutton.png')}>
 
-                        </Image>
-                    </TouchableOpacity>
-                </View>
+                </ScrollView>
+
                 <View style={styles.footer}>
-                    <TouchableOpacity onPress={() => navigate('AddAProfile')}>
+                    <TouchableOpacity 
+                    onPress={() => navigate('AddAProfile')}
+                    >
                         <Text style={styles.homebutton}>Home</Text>
                     </TouchableOpacity>
-                    {this.state.homeLogoShouldShow ? (
+                    {homeLogoShouldShow ? (
                         <Image
                             style={styles.blacklogo}
                             source={require('../assets/blacklogo.png')}
 
                         />
                     ) : null}
-                    {this.state.buttonShouldShow ? (
+                    {buttonShouldShow ? (
                         <TouchableOpacity style={styles.startroutine} >
                             <Button
                                 color='white'
@@ -729,7 +504,8 @@ export default class Tasks extends React.Component {
             </View>
         );
     }
-}
+
+    
 
 const styles = StyleSheet.create({
     container: {
@@ -955,8 +731,7 @@ const styles = StyleSheet.create({
     },
     addprofilebutton: {
         width: 50,
-        height: 50,
-        marginBottom: '10%'
+        height: 50
     },
     input: {
         height: 40,
@@ -1060,7 +835,6 @@ const styles = StyleSheet.create({
         borderColor: 'orange',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1
     },
     profileimageContainer: {
         height: '100%',
@@ -1092,3 +866,5 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
     }
 });
+
+export default Tasks_1;

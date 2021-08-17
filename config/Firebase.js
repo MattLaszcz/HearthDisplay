@@ -21,7 +21,7 @@ const firebaseConfig = {
     authDomain: "hearth-5d9ff.firebaseapp.com",
     databaseURL: "https://hearth-5d9ff-default-rtdb.firebaseio.com/",
     projectId: "hearth-5d9ff",
-    storageBucket: "phone-book-fe436.appspot.com",
+    storageBucket: "gs://hearth-5d9ff.appspot.com",
     messagingSenderId: "357247078028",
     appId: "1:357247078028:ios:31eb229b6ce20308fd75a9"
 };

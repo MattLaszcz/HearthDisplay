@@ -32,6 +32,7 @@ import dispatchTest from './store/reducers/index';
 //import Counter from './Screens/Counter';
 import AddTask from './Screens/AddTask';
 import store from './store/reducers/index_1';
+import Tasks_1 from './Screens/Tasks_1';
 /**
  * createStackNavigator
  *
@@ -53,7 +54,10 @@ import store from './store/reducers/index_1';
 
 const Navigator = createStackNavigator({
     
+    
+
     Home: { screen: Home },
+    Tasks_1: {screen: Tasks_1},
     AddTask: { screen: AddTask },
     //Counter: { screen: Counter },
     RoutineDashboard: { screen: RoutineDashboard },

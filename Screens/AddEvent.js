@@ -68,21 +68,21 @@ export default class AddEvent extends React.Component {
         this.postDataHandler();
     }
 
-    buttonShouldShow() {
+    buttonShouldShow = () => {
         this.setState({
             buttonShouldShow: true,
             eventShouldShow: false
         });
     }
 
-    eventShouldShow() {
+    eventShouldShow = () => {
         this.setState({
             buttonShouldShow: false,
             eventShouldShow: true
         });
     }
 
-    addTaskHandler () {
+    addTaskHandler =() => {
         console.log('this state id' + this.state.id);
         db.collection('users').doc(this.state.id).collection('tasks').doc().set({
             name: this.state.name,
