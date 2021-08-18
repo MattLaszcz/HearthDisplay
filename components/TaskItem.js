@@ -6,20 +6,22 @@ import DoneButton from '../components/DoneButton';
 import {useSelector} from 'react-redux';
 
 
-let instancesCount = 0
+// let instancesCount = 0
 const TaskItem = (props) => {
 
 
   //const resduxStoreTest = useSelector(state => state.tasks.task);
   
-    useEffect(() => {
-      instancesCount += 1
-      console.log({instancesCount})
-      return () => {
-        instancesCount -= 1
-        console.log({instancesCount})
-      }
-    }, [])
+
+  //----------------INSANCES COUNTER-----------------
+    // useEffect(() => {
+    //   instancesCount += 1
+    //   console.log({instancesCount})
+    //   return () => {
+    //     instancesCount -= 1
+    //     console.log({instancesCount})
+    //   }
+    // }, [])
 
   const [shouldShow, setShouldShow] = useState(true);
   

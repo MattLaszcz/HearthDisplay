@@ -135,7 +135,7 @@ useEffect(() => {
       });
   }
 
-}),[id, userId];
+},[id, userId]);
 
 useEffect(()=> console.log('here'),[userId]);
 
@@ -466,6 +466,21 @@ const thissetModalVisible = (visible) => {
                     </ScrollView>
 
                 </ScrollView>
+
+                <View 
+                    style={{width: 50,borderWidth: 1, borderColor: 'red', marginBottom: '5%', marginRight: '5%'}}
+                    >
+                <TouchableOpacity 
+                    onPress={() => setmodalVisible(true)}
+                    style={{width: 50,height: 50, borderWidth: 2, borderColor: 'blue', zIndex:5, marginBottom: 100, position: 'absolute' }}>
+                        <Image 
+                            
+                            style={styles.addprofilebutton}
+                            source={require('../assets/addprofilebutton.png')}>
+
+                        </Image>
+                    </TouchableOpacity>
+                </View>
 
                 <View style={styles.footer}>
                     <TouchableOpacity 

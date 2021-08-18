@@ -30,12 +30,35 @@ function AddTask (props)  {
     const [isSelected, setSelection] = useState(false);
     const [priority, setPriority] = useState(false);
     
-    const { onStateChange } = props;
+    //const { onStateChange } = props;
     
     const toggleSwitch = () => setPriority(previousState => !previousState);
 
     const userId = useSelector((state) => state.id)
-    console.log('userId '+ userId);
+    console.log('ADD TASK 1 userId '+ userId);
+
+    useEffect(() => {
+
+        // this will make sure you only set id when userId
+        // is a valid value, and it won't reset it every
+        // serenader
+      if(userId!=='' && id !== userId)
+         setId(userId);
+         console.log('useEFFECT ID IS SET'+id);
+    
+    //   if (id !== '') {
+    //       db.collection('users').doc(id).collection('tasks').onSnapshot((snapshot)=>{
+    //           const tempTasks = [];
+    //           snapshot.forEach(
+    //              doc => {
+    //                  tempTasks.push(doc.data());
+    //              }
+    //           )
+    //           setTasks(tempTasks);
+    //       });
+    //   }
+    
+    },[id, userId]);
     // const storeSubscribe = store.subscribe(() => {
     //     // When state will be updated(in our case, when items will be fetched), 
     //     // we will update local component state and force component to rerender 
@@ -46,51 +69,51 @@ function AddTask (props)  {
 
     //const updateTaskInfo = event => setName(event.target.value);
 
-    const getInfoHandler = () => {
-        var docRef = db.collection('users').doc(id).collection('tasks');
+    // const getInfoHandler = () => {
+    //     var docRef = db.collection('users').doc(id).collection('tasks');
         
-          var docRefTest = db.collection('users').doc(id).collection('tasks').get()
-          .then(querySnapshot => {
-            const documents = querySnapshot.docs.map(doc => doc.data());
-            console.log('documents'+documents);
-            setTasks({documents});
-        });
+    //       var docRefTest = db.collection('users').doc(id).collection('tasks').get()
+    //       .then(querySnapshot => {
+    //         const documents = querySnapshot.docs.map(doc => doc.data());
+    //         console.log('documents'+documents);
+    //         setTasks({documents});
+    //     });
 
         
 
            
-       // var docRefTest = db.collection('users').doc(this.state.id).collection('tasks').docs.map(doc => doc.data());
-        //console.log('docRefTest'+docRefTest);
-        //return snapshot.docs.map(doc => doc.data());
-        //.doc('Z6vzTZUu1p0VDIkQkbJW');
+    //    // var docRefTest = db.collection('users').doc(this.state.id).collection('tasks').docs.map(doc => doc.data());
+    //     //console.log('docRefTest'+docRefTest);
+    //     //return snapshot.docs.map(doc => doc.data());
+    //     //.doc('Z6vzTZUu1p0VDIkQkbJW');
 
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                const tasks = doc.data();
-                let keys = Object.keys(tasks);
-                let values = Object.values(tasks);
-                const updatedPosts = keys.map(key => {
-                    return {
-                        key, ...tasks[key],
+    //     docRef.get().then((doc) => {
+    //         if (doc.exists) {
+    //             const tasks = doc.data();
+    //             let keys = Object.keys(tasks);
+    //             let values = Object.values(tasks);
+    //             const updatedPosts = keys.map(key => {
+    //                 return {
+    //                     key, ...tasks[key],
 
-                    }
-                });
-                console.log('UPDATED POSTS ' + updatedPosts);
-                console.log('THIS STATE TASKS' + tasks);
-                console.log('keys ' + keys);
-                console.log('values ' + values);
+    //                 }
+    //             });
+    //             console.log('UPDATED POSTS ' + updatedPosts);
+    //             console.log('THIS STATE TASKS' + tasks);
+    //             console.log('keys ' + keys);
+    //             console.log('values ' + values);
 
-                console.log("Document data:", doc.data());
-                //this.setState({ tasks_: keys });
+    //             console.log("Document data:", doc.data());
+    //             //this.setState({ tasks_: keys });
 
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-    }
+    //         } else {
+    //             // doc.data() will be undefined in this case
+    //             console.log("No such document!");
+    //         }
+    //     }).catch((error) => {
+    //         console.log("Error getting document:", error);
+    //     });
+    // }
 
     function thissetModalVisible (visible) {
         setModalVisible( visible );
@@ -111,47 +134,54 @@ function AddTask (props)  {
         thisaddTaskHandler
     })
 
+    const changeModal = (() => props.changeModal(false));
+
     function thisaddTaskHandler (props) {
-        console.log('this state id' + id);
+
+        changeModal();
+
+        console.log('ID FROM ADD TASK' + id);
         db.collection('users').doc(id).collection('tasks').doc().set({
             name: name,
             assigned: assigned,
             tag: tag,
             priority: priority
         })
-        props.setModalVisible;
-        const closeModal = !modalVisible;
-        setmodalVisible(closeModal); 
-        console.log('MODAL VISIBLE '+ modalVisible);
+        //props.setModalVisible;
+        //const closeModal = !modalVisible;
+        // setmodalVisible(closeModal); 
+        // console.log('MODAL VISIBLE '+ modalVisible);
         //const updatedState = modalVisible;
         //onStateChange(updatedState);
     }
 
     useEffect(() => {
-        getInfoHandler
-        console.log('tasks 1'+ tasks);
-        console.log('PRIORITY ' + priority);
+        //getInfoHandler
+        //console.log('tasks 1'+ tasks);
+        //console.log('PRIORITY ' + priority);
     });
+
+    
 
     console.log('tasks 2'+ tasks);
 
-    useEffect(() => {
-        console.log('userId TEST'+ userId);
-        console.log('name state '+name,name);
-        setId(userId);
+    // useEffect(() => {
+    //     console.log('userId TEST'+ userId);
+    //     console.log('name state '+name,name);
+    //     setId(userId);
         
-         store.subscribe(() => {
-            // When state will be updated(in our case, when items will be fetched), 
-            // we will update local component state and force component to rerender 
-            // with new data.
-            let stateId = store.getState().id;
-            console.log('store get state id '+store.getState().id);
-            setId(stateId);
-            console.log('id 1 '+id,id);
-        });
-        console.log('id 2'+id,id);
+    //      store.subscribe(() => {
+    //         // When state will be updated(in our case, when items will be fetched), 
+    //         // we will update local component state and force component to rerender 
+    //         // with new data.
+    //         let stateId = store.getState().id;
+    //         console.log('store get state id '+store.getState().id);
+    //         setId(stateId);
+    //         console.log('id 1 '+id,id);
+    //     });
+    //     console.log('id 2'+id,id);
         
-    });
+    // });
 
     
 
@@ -429,7 +459,10 @@ function AddTask (props)  {
                             <Button
                             title='ADD'
                             //color="#ff5c5c"
-                            onPress={() => props.changeModal(false)}
+                            onPress={
+                                //() => props.changeModal(false)
+                                thisaddTaskHandler
+                            }
                             //onPress={() => props.setValue(true)}
                             >
 
